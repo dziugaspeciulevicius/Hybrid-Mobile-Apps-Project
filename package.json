@@ -1,22 +1,41 @@
 {
-  "main": "node_modules/expo/AppEntry.js",
-  "scripts": {
-    "start": "expo start",
-    "android": "expo start --android",
-    "ios": "expo start --ios",
-    "web": "expo start --web",
-    "eject": "expo eject"
-  },
+  "name": "eds-store",
+  "version": "1.0.0",
+  "description": "ED's closet app",
+  "main": "server.js",
+  "type": "module",
   "dependencies": {
-    "expo": "~40.0.0",
-    "expo-status-bar": "~1.0.3",
-    "react": "16.13.1",
-    "react-dom": "16.13.1",
-    "react-native": "https://github.com/expo/react-native/archive/sdk-40.0.1.tar.gz",
-    "react-native-web": "~0.13.12"
+    "bcryptjs": "^2.4.3",
+    "dotenv": "^8.2.0",
+    "colors": "^1.4.0",
+    "express": "^4.17.1",
+    "express-async-handler": "^1.1.4",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.10.11",
+    "morgan": "^1.10.0",
+    "multer": "^1.4.2"
   },
   "devDependencies": {
-    "@babel/core": "~7.9.0"
+    "concurrently": "^5.3.0",
+    "nodemon": "^2.0.6"
   },
-  "private": true
+  "scripts": {
+    "start": "node backend/server",
+    "server": "nodemon backend/server",
+    "client": "npm start --prefix frontend",
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "data:import": "node backend/seeder",
+    "data:destroy": "node backend/seeder -d",
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix frontend && npm run build --prefix frontend"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dziugaspeciulevicius/ED-s-store.git"
+  },
+  "author": "Dziugas",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/dziugaspeciulevicius/ED-s-store/issues"
+  },
+  "homepage": "https://github.com/dziugaspeciulevicius/ED-s-store#readme"
 }
