@@ -1,44 +1,73 @@
 import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { login } from "../actions/userActions";
 import { View, StyleSheet } from "react-native";
 import styled from "styled-components";
-
 import Text from "../components/Text";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
-const LoginScreen = () => {
-
+const LoginScreen = ({ navigation }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [token, setToken] = useState("");
 
+  const dispatch = useDispatch();
+
+  const userLogin = useSelector((state) => state.userLogin);
+  const { loading, error, userInfo } = userLogin;
+
+  useEffect(() => {
+    if (userInfo) {
+      navigation.navigate("Main", { screen: "Orders" });
+    }
+  }, [userInfo, navigation]);
+
+  const submitHandler = (e) => {
+    dispatch(login(email, password));
+    console.log('login')
+  };
+  
+  
   return (
     <Container>
       <Main>
-        <Text title semi center>Welcome back</Text>
+        <Text title semi center>
+          Welcome back
+        </Text>
       </Main>
 
-    <Auth>
-      <AuthContainer>
-        <AuthTitle>Email Address</AuthTitle>
-        <AuthField 
-          autoCapitalize="none" 
-          autoCompleteType="email" 
-          autoCorrect={false} 
-          autoFocus={true}
-          keyboardType="email-address" />
-      </AuthContainer>
-      <AuthContainer>
-        <AuthTitle>Password</AuthTitle>
-        <AuthField 
-          autoCapitalize="none" 
-          autoCompleteType="password" 
-          autoCorrect={false} 
-          autoFocus={true}
-          secureTextEntry={true}/>
-      </AuthContainer>
-    </Auth>
+      <Auth>
+        <AuthContainer>
+          <AuthTitle>Email Address</AuthTitle>
+          <AuthField
+            autoCapitalize="none"
+            autoCompleteType="email"
+            autoCorrect={false}
+            autoFocus={true}
+            keyboardType="email-address"
+            value={email}
+            onChangeText={(email) => setEmail(email)}
+          />
+        </AuthContainer>
+        <AuthContainer>
+          <AuthTitle>Password</AuthTitle>
+          <AuthField
+            autoCapitalize="none"
+            autoCompleteType="password"
+            autoCorrect={false}
+            autoFocus={true}
+            secureTextEntry={true}
+            value={password}
+            onChangeText={(password) => setPassword(password)}
+          />
+        </AuthContainer>
+      </Auth>
 
-    <SignInContainer>
-      <Text bold center color="#fff">Sign In</Text>
-    </SignInContainer>
+      <SignInContainer onPress={submitHandler}>
+        <Text bold center color="#fff">
+          Sign In
+        </Text>
+      </SignInContainer>
 
       <HeaderGraphic>
         <RightCircle />
@@ -97,7 +126,7 @@ const HeaderGraphic = styled.View`
 `;
 
 const RightCircle = styled.View`
-  background-color: #8022D9;
+  background-color: #8022d9;
   position: absolute;
   width: 400px;
   height: 400px;

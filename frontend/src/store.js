@@ -1,5 +1,8 @@
 import { createStore, combineReducers, applyMiddleware } from "redux";
 import thunk from "redux-thunk";
+import { composeWithDevTools } from "redux-devtools-extension";
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 import {
   userLoginReducer,
   userRegisterReducer,
@@ -20,11 +23,24 @@ const reducer = combineReducers({
   userUpdate: userUpdateReducer,
 });
 
+
+const userInfoFromStorage = AsyncStorage.getItem('userInfo')
+// userInfoFromStorage != null ? JSON.parse(userInfoFromStorage) : null
+
+// const userInfoFromStorage = AsyncStorage.getItem("userInfo")
+  // ? JSON.parse(userInfoFromStorage)
+  // : null
+
+  const initialState = {
+    userLogin: { userInfo: userInfoFromStorage },
+  };
+
 const middleware = [thunk];
 
 const store = createStore(
   reducer,
-  applyMiddleware(...middleware)
+  initialState,
+  composeWithDevTools(applyMiddleware(...middleware))
 );
 
 export default store;
