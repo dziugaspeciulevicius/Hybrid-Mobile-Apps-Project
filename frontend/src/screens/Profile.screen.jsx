@@ -6,7 +6,7 @@ import {
   getUserDetails,
   updateUserProfile,
   logout,
-  register
+  register,
 } from "../actions/userActions";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
@@ -26,71 +26,49 @@ const ProfileScreen = ({ navigation }) => {
 
   const userUpdateProfile = useSelector((state) => state.userUpdateProfile);
   const { success } = userUpdateProfile;
-  
-
-
-
-//   const userRegister = useSelector(state => state.userRegister)
-//   const { userInfo } = userRegister  // from user reducer
-  
-  
-//   useEffect(() => {
-//     if(userInfo) {
-//       // history.push(redirect)
-//       console.log("registered user is in state")
-//     }
-//   }, [dispatch, userInfo, navigation])
-
-//   const submitHandler = (e) => {
-//     e.preventDefault();
-//     console.log("click")
-//     if(password !== confirmPassword) {
-//         console.log("Passwords don't match")
-//     } else {
-//         dispatch(register(name, email, password))
-//         console.log("dispatch register hit")
-//     }
-// };
-  
-  
-  
-  // const orderListMy = useSelector((state) => state.orderListMy);
-  // const { loading: loadingOrders, error: errorOrders, orders } = orderListMy;
-
-  useEffect(() => {
-    if (!userInfo) {
-      navigation.navigate("Auth", { screen: "Login" });
-    } else {
-      if (!user.name) {
-        dispatch(getUserDetails("profile"));
-      } else {
-        setName(user.name);
-        setEmail(user.email);
-      }
-    }
-  }, [dispatch, userInfo, user]);
-
-  const submitHandler = (e) => {
-    e.preventDefault();
-    // if (password !== confirmPassword) {
-    //   console.log("Passwords don't match");
-    // } else {
-    //   dispatch(updateUserProfile({ id: user._id, name, email, password }));
-    // }
-    console.log("update profile");
-  };
 
   const logoutHandler = () => {
     console.log("logout");
     dispatch(logout());
-    navigation.navigate("Auth", { screen: "Main" });
-    if (userInfo) {
-      console.log("user info is still in state")
-    } else {
-      console.log("user info is no longer logged in")
-    }
-    // navigation.navigate("Auth");
+    navigation.navigate("Auth", { screen: "Login" });
+    // if (userInfo) {
+    // console.log("user info is still in state")
+    // } else {
+    // console.log("user info is no longer logged in")
+    // }
+  };
 
+  // checking is user is logged in
+  useEffect(() => {
+    // if no user info redirect to login
+    if (!userInfo) {
+      navigation.navigate("Auth", { screen: "Login" });
+    } else {
+      if (error) {
+        console.log(error)
+        navigation.navigate("Auth", { screen: "Login" });
+      } else {
+        // if no user name, dispatch userDetails which takes an id, so we can pass a profile instead of an id
+        if (!user || !user.name) {
+          console.log("dispatch profile")
+          dispatch(getUserDetails("profile"));
+        } else {
+          // if we already have a user we can fill user info
+          setName(user.name);
+          setEmail(user.email);
+        }
+      }
+    }
+  }, [dispatch, user, navigation]);
+
+  const submitHandler = (e) => {
+    e.preventDefault();
+    if (password !== confirmPassword) {
+      console.log("Passwords don't match");
+    } else {
+      dispatch(updateUserProfile({ id: user._id, name, email, password }));
+    }
+    console.log("update profile");
   };
 
   return (

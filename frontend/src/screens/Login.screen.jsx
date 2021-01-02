@@ -9,7 +9,6 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 const LoginScreen = ({ navigation }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [token, setToken] = useState("");
 
   const dispatch = useDispatch();
 
@@ -17,17 +16,18 @@ const LoginScreen = ({ navigation }) => {
   const { loading, error, userInfo } = userLogin;
 
   useEffect(() => {
-    if (userInfo) {
+    if (userInfo && userInfo.isAdmin) {
       navigation.navigate("Main", { screen: "Orders" });
+    } else {
+      console.log("user is not an admin")
     }
   }, [userInfo, navigation]);
 
   const submitHandler = (e) => {
     dispatch(login(email, password));
-    console.log('login')
+    console.log("login");
   };
-  
-  
+
   return (
     <Container>
       <Main>
@@ -36,6 +36,9 @@ const LoginScreen = ({ navigation }) => {
         </Text>
       </Main>
 
+      {error && (
+          <Text center color="red">{error}</Text>
+      )}
       <Auth>
         <AuthContainer>
           <AuthTitle>Email Address</AuthTitle>
