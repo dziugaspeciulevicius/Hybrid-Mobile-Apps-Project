@@ -1,12 +1,25 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-// import { listOrders } from "../actions/orderActions";
 import styled from 'styled-components';
 import Text from "../components/Text";
+import { listOrders } from "../actions/orderActions";
 
 const OrdersScreen = ({ navigation }) => {
   const dispatch = useDispatch()
 
+  const orderList = useSelector((state) => state.orderList)
+  const { loading, error, orders } = orderList
+
+  const userLogin = useSelector((state) => state.userLogin)
+  const { userInfo } = userLogin
+
+  // useEffect(() => {
+  //   // if (userInfo && userInfo.isAdmin) {
+  //     dispatch(listOrders())
+  //   // } else {
+  //     // navigation.navigate("Auth", { screen: "Login" });
+  //   // }
+  // }, [dispatch, navigation, userInfo, orderList, error])
   
   return (
     <Container>
@@ -15,6 +28,12 @@ const OrdersScreen = ({ navigation }) => {
           Orders
         </Text>
       </Main>
+
+      {error && (
+        <Text center color="red">{error}</Text>
+    )}
+      
+
 
       <HeaderGraphic>
         <RightCircle />
@@ -43,6 +62,12 @@ const HeaderGraphic = styled.View`
   width: 100%;
   top: -90px;
   z-index: -100;
+`;
+
+const OrderCard = styled.View`
+  width: 95%;
+  border: 1px solid black;
+  border-radius: 5px;
 `;
 
 const RightCircle = styled.View`

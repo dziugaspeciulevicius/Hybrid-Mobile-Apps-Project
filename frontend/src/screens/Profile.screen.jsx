@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+
 import styled from "styled-components";
 import Text from "../components/Text";
 import {
@@ -52,10 +53,11 @@ const ProfileScreen = ({ navigation }) => {
         if (!user || !user.name) {
           console.log("dispatch profile")
           dispatch(getUserDetails("profile"));
-        } else {
-          // if we already have a user we can fill user info
-          setName(user.name);
-          setEmail(user.email);
+          } else {
+            // if we already have a user we can fill user info
+            setName(user.name);
+            setEmail(user.email);
+            // console.log("User token: ", userInfo.token);
         }
       }
     }
