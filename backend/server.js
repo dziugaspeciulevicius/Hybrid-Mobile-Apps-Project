@@ -7,7 +7,10 @@ import { notFound, errorHandler } from "./middleware/errorMiddleware.js";
 import connectDB from "./config/db.js";
 
 // import routes
+// import productRoutes from "./routes/productRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
+import orderRoutes from "./routes/orderRoutes.js";
+// import uploadRoutes from './routes/uploadRoutes.js';
 
 dotenv.config();
 
@@ -22,7 +25,11 @@ if(process.env.NODE_ENV === 'development') {
 app.use(express.json());
 
 // mounting routes
+// app.use("/api/products", productRoutes);
 app.use("/api/users", userRoutes);
+app.use("/api/orders", orderRoutes);
+// app.use("/api/upload", uploadRoutes);
+
 
 // paypal config route (when we ready to make a payment, we hit this route and fetch client id)
 // app.get("/api/config/paypal", (req, res) =>

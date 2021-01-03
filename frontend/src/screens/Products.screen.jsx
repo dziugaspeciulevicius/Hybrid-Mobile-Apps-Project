@@ -1,6 +1,20 @@
 import React from "react";
-import styled from 'styled-components';
+import styled from "styled-components";
 import Text from "../components/Text";
+import {
+  Alert,
+  FlatList,
+  TouchableOpacity,
+  View,
+  StyleSheet,
+} from "react-native";
+import ActionButton from "react-native-action-button";
+import Icon from "react-native-vector-icons/Ionicons";
+import { LogBox } from 'react-native';
+LogBox.ignoreLogs(['Warning: ...']); // Ignore log notification by message
+// LogBox.ignoreAllLogs();//Ignore all log notifications
+
+
 
 const ProductsScreen = () => {
   return (
@@ -11,10 +25,18 @@ const ProductsScreen = () => {
         </Text>
       </Main>
 
+      <View style={{ flex: 1, backgroundColor: "#f3f3f3" }}>
+        <ActionButton
+          buttonColor="rgba(128,34,217,1)"
+          onPress={() => {
+            console.log("add product");
+          }}
+        />
+      </View>
       <HeaderGraphic>
-      <RightCircle />
-      <LeftCircle />
-    </HeaderGraphic>
+        <RightCircle />
+        <LeftCircle />
+      </HeaderGraphic>
       <StatusBar barStyle="light-content" />
     </Container>
   );
@@ -22,12 +44,21 @@ const ProductsScreen = () => {
 
 export default ProductsScreen;
 
+const styles = StyleSheet.create({
+  actionButtonIcon: {
+    fontSize: 20,
+    height: 22,
+    color: "white",
+  },
+});
+
 const Container = styled.View`
   flex: 1;
 `;
 
 const Main = styled.View`
   margin-top: 60px;
+  padding-bottom: 10px;
 `;
 
 const HeaderGraphic = styled.View`
@@ -57,6 +88,5 @@ const LeftCircle = styled.View`
   left: 250px;
   top: -20px;
 `;
-
 
 const StatusBar = styled.StatusBar``;

@@ -44,9 +44,10 @@ const UsersScreen = () => {
     );
   };
 
-  //   alertItemName = (user) => {
-  //     alert(user.name)
-  //  }
+  const editHandler = (e) => {
+    e.preventDefault();
+    console.log("edit profile");
+  };
 
   return (
     <Container>
@@ -72,11 +73,42 @@ const UsersScreen = () => {
         // />
         <View>
           {users.map((user) => (
-            <TouchableOpacity key={user._id}>
-              <UserCard>
-                <Text>{user.name}</Text>
-              </UserCard>
-            </TouchableOpacity>
+            <UserCard key={user._id}>
+              <Text heavy>
+                ID:
+                <Text semi> {user._id}</Text>
+              </Text>
+              <Text heavy>
+                User name:
+                <Text semi> {user.name}</Text>
+              </Text>
+              <Text heavy>
+                Email:
+                <Text semi> {user.email}</Text>
+              </Text>
+              <Text heavy>
+                Is Admin?:
+                {user.isAdmin ? (
+                  <Text heavy color="#32CD32"> True</Text>
+                ) : (
+                  <Text heavy color="#FF0000"> False</Text>
+                )}
+              </Text>
+
+              <ButtonsContainer>
+                <UpdateContainer onPress={editHandler}>
+                  <Text semi center color="#fff">
+                    Edit information
+                  </Text>
+                </UpdateContainer>
+
+                <SignOutContainer onPress={() => deleteUserHandler(user._id)}>
+                  <Text semi center color="#fff">
+                    Delete user
+                  </Text>
+                </SignOutContainer>
+              </ButtonsContainer>
+            </UserCard>
           ))}
         </View>
       )}
@@ -106,9 +138,7 @@ const UserCard = styled.View`
   background-color: #e0e0e0;
   border-radius: 10px;
   margin: 5px 16px;
-  /* height: 48px; */
-  /* align-items: center; */
-  /* justify-content: center; */
+  padding: 10px;
 `;
 
 const HeaderGraphic = styled.View`
@@ -137,6 +167,35 @@ const LeftCircle = styled.View`
   border-radius: 300px;
   left: 100px;
   top: -140px;
+`;
+
+const UpdateContainer = styled.TouchableOpacity`
+  margin: 0 10px;
+  width: 45%;
+  margin-top: 10px;
+  height: 30px;
+  align-items: center;
+  justify-content: center;
+  background-color: #8022d9;
+  border-radius: 6px;
+`;
+
+const SignOutContainer = styled.TouchableOpacity`
+  margin: 0 10px;
+  width: 45%;
+  margin-top: 10px;
+  height: 30px;
+  align-items: center;
+  justify-content: center;
+  background-color: #ff0000;
+  border-radius: 6px;
+`;
+
+const ButtonsContainer = styled.View`
+  /* flex: 1; */
+  flex-direction: row;
+  justify-content: space-between;
+  justify-content: center;
 `;
 
 const StatusBar = styled.StatusBar``;

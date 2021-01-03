@@ -1,10 +1,11 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { Alert, FlatList, TouchableOpacity, View } from "react-native";
 import styled from 'styled-components';
 import Text from "../components/Text";
 import { listOrders } from "../actions/orderActions";
 
-const OrdersScreen = ({ navigation }) => {
+const OrdersScreen = ({navigation}) => {
   const dispatch = useDispatch()
 
   const orderList = useSelector((state) => state.orderList)
@@ -13,14 +14,21 @@ const OrdersScreen = ({ navigation }) => {
   const userLogin = useSelector((state) => state.userLogin)
   const { userInfo } = userLogin
 
-  // useEffect(() => {
-  //   // if (userInfo && userInfo.isAdmin) {
-  //     dispatch(listOrders())
-  //   // } else {
-  //     // navigation.navigate("Auth", { screen: "Login" });
-  //   // }
-  // }, [dispatch, navigation, userInfo, orderList, error])
-  
+  useEffect(() => {
+    if (userInfo && userInfo.isAdmin) {
+      dispatch(listOrders())
+      console.log(orders);
+    } else {
+      navigation.navigate("Auth", { screen: "Login" });
+      console.log("push to login page");
+    }
+  }, [dispatch, userInfo, navigation])
+
+  const viewDetailsHandler = (e) => {
+    e.preventDefault();
+    console.log("view order details");
+  };
+
   return (
     <Container>
       <Main>
@@ -29,9 +37,59 @@ const OrdersScreen = ({ navigation }) => {
         </Text>
       </Main>
 
-      {error && (
-        <Text center color="red">{error}</Text>
-    )}
+      {loading ? (
+        <Text center>Data is loading...</Text>
+      ) : error ? (
+        <Text center color="red">
+          {error}
+        </Text>
+      ) : (
+        <View>
+          {orders.map((order) => (
+            <OrderCard key={order._id}>
+              <Text heavy>
+                ID:
+                <Text semi> {order._id}</Text>
+              </Text>
+              <Text heavy>
+                User:
+                <Text semi> {order.user && order.user.name}</Text>
+              </Text>
+              <Text heavy>
+                Date:
+                <Text semi> {order.createdAt.substring(0, 10)}</Text>
+              </Text>
+              <Text heavy>
+                Total:
+                <Text semi> ${order.totalPrice}</Text>
+              </Text>
+              <Text heavy>
+                Is paid?:
+                {order.isPaid ? (
+                  <Text semi> {order.paidAt.substring(0, 10)}</Text>
+                ) : (
+                  <Text heavy color="#FF0000"> Not paid</Text>
+                )}
+              </Text>
+              <Text heavy>
+                Is delivered?:
+                {order.isDelivered ? (
+                  <Text semi> {order.deliveredAt.substring(0, 10)}</Text>
+                ) : (
+                  <Text heavy color="#FF0000"> Not delivered</Text>
+                )}
+              </Text>
+
+                <DetailsContainer onPress={viewDetailsHandler}>
+                  <Text semi center color="#fff">
+                    Details
+                  </Text>
+                </DetailsContainer>
+                
+            </OrderCard>
+          ))}
+        </View>
+      )}
       
 
 
@@ -54,20 +112,22 @@ const Container = styled.View`
 
 const Main = styled.View`
   margin-top: 60px;
+  padding-bottom: 10px;
 `;
 
+const OrderCard = styled.View`
+  border: 2px solid #8022d9;
+  background-color: #e0e0e0;
+  border-radius: 10px;
+  margin: 5px 16px;
+  padding: 10px;
+`;
 
 const HeaderGraphic = styled.View`
   position: absolute;
   width: 100%;
   top: -90px;
   z-index: -100;
-`;
-
-const OrderCard = styled.View`
-  width: 95%;
-  border: 1px solid black;
-  border-radius: 5px;
 `;
 
 const RightCircle = styled.View`
@@ -89,6 +149,16 @@ const LeftCircle = styled.View`
   border-radius: 300px;
   left: -20px;
   top: -40px;
+`;
+
+const DetailsContainer = styled.TouchableOpacity`
+  margin: 0 10px;
+  height: 30px;
+  margin-top: 10px;
+  align-items: center;
+  justify-content: center;
+  background-color: #8022d9;
+  border-radius: 6px;
 `;
 
 
