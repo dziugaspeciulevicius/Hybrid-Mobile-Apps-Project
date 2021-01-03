@@ -1,28 +1,28 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Alert, FlatList, TouchableOpacity, View } from "react-native";
-import styled from 'styled-components';
+import { Alert, FlatList, TouchableOpacity, View, ScrollView } from "react-native";
+import styled from "styled-components";
 import Text from "../components/Text";
 import { listOrders } from "../actions/orderActions";
 
-const OrdersScreen = ({navigation}) => {
-  const dispatch = useDispatch()
+const OrdersScreen = ({ navigation }) => {
+  const dispatch = useDispatch();
 
-  const orderList = useSelector((state) => state.orderList)
-  const { loading, error, orders } = orderList
+  const orderList = useSelector((state) => state.orderList);
+  const { loading, error, orders } = orderList;
 
-  const userLogin = useSelector((state) => state.userLogin)
-  const { userInfo } = userLogin
+  const userLogin = useSelector((state) => state.userLogin);
+  const { userInfo } = userLogin;
 
   useEffect(() => {
     if (userInfo && userInfo.isAdmin) {
-      dispatch(listOrders())
+      dispatch(listOrders());
       console.log(orders);
     } else {
       navigation.navigate("Auth", { screen: "Login" });
       console.log("push to login page");
     }
-  }, [dispatch, userInfo, navigation])
+  }, [dispatch, userInfo, navigation]);
 
   const viewDetailsHandler = (e) => {
     e.preventDefault();
@@ -44,54 +44,52 @@ const OrdersScreen = ({navigation}) => {
           {error}
         </Text>
       ) : (
-        <View>
-          {orders.map((order) => (
-            <OrderCard key={order._id}>
-              <Text heavy>
-                ID:
-                <Text semi> {order._id}</Text>
-              </Text>
-              <Text heavy>
-                User:
-                <Text semi> {order.user && order.user.name}</Text>
-              </Text>
-              <Text heavy>
-                Date:
-                <Text semi> {order.createdAt.substring(0, 10)}</Text>
-              </Text>
-              <Text heavy>
-                Total:
-                <Text semi> ${order.totalPrice}</Text>
-              </Text>
-              <Text heavy>
-                Is paid?:
-                {order.isPaid ? (
-                  <Text semi> {order.paidAt.substring(0, 10)}</Text>
-                ) : (
-                  <Text heavy color="#FF0000"> Not paid</Text>
-                )}
-              </Text>
-              <Text heavy>
-                Is delivered?:
-                {order.isDelivered ? (
-                  <Text semi> {order.deliveredAt.substring(0, 10)}</Text>
-                ) : (
-                  <Text heavy color="#FF0000"> Not delivered</Text>
-                )}
-              </Text>
+        <ScrollView>
+        {orders.map((order) => (
+          <OrderCard key={order._id}>
+            <Text heavy>
+              ID:
+              <Text semi> {order._id}</Text>
+            </Text>
+            <Text heavy>
+              User:
+              <Text semi> {order.user && order.user.name}</Text>
+            </Text>
+            <Text heavy>
+              Date:
+              <Text semi> {order.createdAt.substring(0, 10)}</Text>
+            </Text>
+            <Text heavy>
+              Total:
+              <Text semi> ${order.totalPrice}</Text>
+            </Text>
+            <Text heavy>
+              Paid:
+              {order.isPaid ? (
+                <Text semi> {order.paidAt.substring(0, 10)}</Text>
+              ) : (
+                <Text heavy color="#FF0000"> Not paid</Text>
+              )}
+            </Text>
+            <Text heavy>
+              Delivered:
+              {order.isDelivered ? (
+                <Text semi> {order.deliveredAt.substring(0, 10)}</Text>
+              ) : (
+                <Text heavy color="#FF0000"> Not delivered</Text>
+              )}
+            </Text>
 
-                <DetailsContainer onPress={viewDetailsHandler}>
-                  <Text semi center color="#fff">
-                    Details
-                  </Text>
-                </DetailsContainer>
-                
-            </OrderCard>
-          ))}
-        </View>
+              <DetailsContainer onPress={viewDetailsHandler}>
+                <Text semi center color="#fff">
+                  Details
+                </Text>
+              </DetailsContainer>
+              
+          </OrderCard>
+        ))}
+      </ScrollView>
       )}
-      
-
 
       <HeaderGraphic>
         <RightCircle />
@@ -99,12 +97,10 @@ const OrdersScreen = ({navigation}) => {
       </HeaderGraphic>
       <StatusBar barStyle="light-content" />
     </Container>
-
   );
 };
 
 export default OrdersScreen;
-
 
 const Container = styled.View`
   flex: 1;
@@ -160,6 +156,5 @@ const DetailsContainer = styled.TouchableOpacity`
   background-color: #8022d9;
   border-radius: 6px;
 `;
-
 
 const StatusBar = styled.StatusBar``;

@@ -2,7 +2,14 @@ import { createStore, combineReducers, applyMiddleware } from "redux";
 import thunk from "redux-thunk";
 import { composeWithDevTools } from "redux-devtools-extension";
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
+import {
+  productListReducer,
+  productDetailsReducer,
+  productDeleteReducer,
+  productCreateReducer,
+  productUpdateReducer,
+  productReviewCreateReducer
+} from "./reducers/productReducers";
 import {
   userLoginReducer,
   userRegisterReducer,
@@ -22,6 +29,12 @@ import {
 } from "./reducers/orderReducers.js";
 
 const reducer = combineReducers({
+  productList: productListReducer,
+  productDetails: productDetailsReducer,
+  productDelete: productDeleteReducer,
+  productCreate: productCreateReducer,
+  productUpdate: productUpdateReducer,
+  productReviewCreate: productReviewCreateReducer,
   userLogin: userLoginReducer,
   userRegister: userRegisterReducer,
   userDetails: userDetailsReducer,

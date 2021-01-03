@@ -17,7 +17,7 @@ const LoginScreen = ({ navigation }) => {
 
   useEffect(() => {
     if (userInfo && userInfo.isAdmin) {
-      navigation.navigate("Main", { screen: "Profile" });
+      navigation.navigate("Main", { screen: "Orders" });
     } else {
       console.log("user is not an admin")
     }

@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Alert, FlatList, TouchableOpacity, View } from "react-native";
+import { Alert, FlatList, TouchableOpacity, View, ScrollView } from "react-native";
 import styled from "styled-components";
 import Text from "../components/Text";
 import { listUsers, deleteUser } from "../actions/userActions.js";
@@ -64,14 +64,7 @@ const UsersScreen = () => {
           {error}
         </Text>
       ) : (
-        // <Text center> Hello it should render users</Text>
-        // <TouchableOpacity></TouchableOpacity>
-        // <FlatList
-        //   data={users}
-        //   renderItem={user}
-        //   onRefresh={() => onRefresh()}
-        // />
-        <View>
+        <ScrollView>
           {users.map((user) => (
             <UserCard key={user._id}>
               <Text heavy>
@@ -89,9 +82,15 @@ const UsersScreen = () => {
               <Text heavy>
                 Is Admin?:
                 {user.isAdmin ? (
-                  <Text heavy color="#32CD32"> True</Text>
+                  <Text heavy color="#32CD32">
+                    {" "}
+                    True
+                  </Text>
                 ) : (
-                  <Text heavy color="#FF0000"> False</Text>
+                  <Text heavy color="#FF0000">
+                    {" "}
+                    False
+                  </Text>
                 )}
               </Text>
 
@@ -102,15 +101,15 @@ const UsersScreen = () => {
                   </Text>
                 </UpdateContainer>
 
-                <SignOutContainer onPress={() => deleteUserHandler(user._id)}>
+                <DeleteContainer onPress={() => deleteUserHandler(user._id)}>
                   <Text semi center color="#fff">
                     Delete user
                   </Text>
-                </SignOutContainer>
+                </DeleteContainer>
               </ButtonsContainer>
             </UserCard>
           ))}
-        </View>
+        </ScrollView>
       )}
 
       <HeaderGraphic>
@@ -180,7 +179,7 @@ const UpdateContainer = styled.TouchableOpacity`
   border-radius: 6px;
 `;
 
-const SignOutContainer = styled.TouchableOpacity`
+const DeleteContainer = styled.TouchableOpacity`
   margin: 0 10px;
   width: 45%;
   margin-top: 10px;
