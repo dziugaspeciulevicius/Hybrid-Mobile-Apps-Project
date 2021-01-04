@@ -2,25 +2,15 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import Text from "../components/Text";
-import {
-  Alert,
-  FlatList,
-  TouchableOpacity,
-  View,
-  StyleSheet,
-  ScrollView
-} from "react-native";
-import ActionButton from "react-native-action-button";
-import Icon from "react-native-vector-icons/Ionicons";
+import { Alert, TouchableOpacity, ScrollView } from "react-native";
 import {
   listProducts,
   deleteProduct,
   createProduct,
 } from "../actions/productActions";
-import { LogBox } from "react-native";
 import { PRODUCT_CREATE_RESET } from "../constants/productConstants";
 
-const ProductsScreen = () => {
+const ProductsScreen = ({ navigation }) => {
   const dispatch = useDispatch();
 
   const productList = useSelector((state) => state.productList);
@@ -44,11 +34,6 @@ const ProductsScreen = () => {
     product: createdProduct,
   } = productCreate;
 
-  const createProductHandler = () => {
-    // dispatch(createProduct());
-    console.log("create product");
-  };
-
   useEffect(() => {
     dispatch({ type: PRODUCT_CREATE_RESET });
 
@@ -58,11 +43,13 @@ const ProductsScreen = () => {
     }
 
     if (successProductCreate) {
-      // history.push(`/admin/product/${createdProduct._id}/edit`);
-      console.log("successProductCreate push to create product._id");
+      navigation.navigate("EditProduct");
+      console.log(
+        "successProductCreate push to /admin/product/${createdProduct._id}/edit"
+      );
     } else {
       dispatch(listProducts());
-      console.log(products);
+      console.log("list products");
     }
   }, [
     dispatch,
@@ -70,7 +57,13 @@ const ProductsScreen = () => {
     successProductDelete,
     successProductCreate,
     createdProduct,
+    navigation,
   ]);
+
+  const createProductHandler = () => {
+    dispatch(createProduct());
+    console.log("create product");
+  };
 
   const deleteProductHandler = (id) => {
     Alert.alert(
@@ -88,9 +81,12 @@ const ProductsScreen = () => {
     );
   };
 
-  const editHandler = (e) => {
-    e.preventDefault();
+  const editProductHandler = (product) => {
     console.log("edit product");
+    console.log("view order details");
+    navigation.navigate("EditProduct", {
+      ...product,
+    });
   };
 
   return (
@@ -137,7 +133,7 @@ const ProductsScreen = () => {
               </Text>
 
               <ButtonsContainer>
-                <UpdateContainer onPress={editHandler}>
+                <UpdateContainer onPress={() => editProductHandler(product)}>
                   <Text semi center color="#fff">
                     Edit information
                   </Text>

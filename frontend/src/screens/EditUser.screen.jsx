@@ -53,7 +53,6 @@ const EditUserScreen = ({ route, navigation }) => {
             autoCapitalize="none"
             autoCompleteType="name"
             autoCorrect={false}
-            // autoFocus={true}
             value={userName}
             onChangeText={(userName) => setName(userName)}
           />
@@ -64,7 +63,6 @@ const EditUserScreen = ({ route, navigation }) => {
             autoCapitalize="none"
             autoCompleteType="email"
             autoCorrect={false}
-            // autoFocus={true}
             value={userEmail}
             onChangeText={(userEmail) => setEmail(userEmail)}
           />
