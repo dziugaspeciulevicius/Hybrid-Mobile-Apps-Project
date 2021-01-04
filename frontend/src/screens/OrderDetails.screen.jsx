@@ -23,7 +23,6 @@ import {
 const OrderDetails = ({ match, route, navigation }) => {
   const {
     _id,
-    user,
     shippingAddress,
     isDelivered,
     deliveredAt,
@@ -31,7 +30,48 @@ const OrderDetails = ({ match, route, navigation }) => {
     paidAt,
     paymentMethod,
     orderItems,
+    itemsPrice,
+    shippingPrice,
+    taxPrice,
+    totalPrice,
   } = route.params;
+
+  const dispatch = useDispatch();
+
+  const orderDetails = useSelector((state) => state.orderDetails);
+  const { order, loading, error } = orderDetails;
+
+  const orderDeliver = useSelector((state) => state.orderDeliver);
+  const { loading: loadingDeliver, success: successDeliver } = orderDeliver;
+
+  const userLogin = useSelector((state) => state.userLogin);
+  const { userInfo } = userLogin;
+
+  useEffect(() => {
+    if (!userInfo) {
+      navigation.navigate("Auth", { screen: "Login" });
+      console.log("push to login page");
+    }
+
+    if (!order || successDeliver || (order && order._id !== _id)) {
+      dispatch({ type: ORDER_DELIVER_RESET });
+      dispatch(getOrderDetails(_id));
+    }
+  }, [dispatch, successDeliver, deliveredAt, isDelivered, order, userInfo]);
+
+  const submitHandler = (e) => {
+    e.preventDefault();
+    dispatch(deliverOrder(order));
+    Alert.alert(
+        "Order delivered",
+        "Order has been marked as delivered",
+        [
+          { text: "OK" },
+        ],
+        { cancelable: false }
+      );
+  };
+
   return (
     <Container>
       <Main>
@@ -120,7 +160,54 @@ const OrderDetails = ({ match, route, navigation }) => {
               Order items
             </Text>
           </CardHeader>
+          {orderItems.map((item, index) => (
+            <Item key={index}>
+              <Text heavy>
+                Item name:
+                <Text semi> {item.name}</Text>
+              </Text>
+              <Text heavy>
+                Quantity & price:
+                <Text semi>
+                  {" "}
+                  {item.qty} x ${item.price} = ${item.qty * item.price}
+                </Text>
+              </Text>
+            </Item>
+          ))}
         </OrderCard>
+
+        <OrderCard>
+          <CardHeader>
+            <Text large heavy center>
+              Order summary
+            </Text>
+          </CardHeader>
+          <Text heavy>
+            Items:
+            <Text semi> ${itemsPrice}</Text>
+          </Text>
+          <Text heavy>
+            Shipping:
+            <Text semi> ${shippingPrice}</Text>
+          </Text>
+          <Text heavy>
+            Tax:
+            <Text semi> ${taxPrice}</Text>
+          </Text>
+          <Text heavy>
+            Total:
+            <Text heavy> ${totalPrice}</Text>
+          </Text>
+        </OrderCard>
+
+        {userInfo && userInfo.isAdmin && isPaid && !isDelivered && (
+          <UpdateContainer onPress={submitHandler}>
+            <Text bold center color="#fff">
+              Mark as delivered
+            </Text>
+          </UpdateContainer>
+        )}
       </ScrollView>
 
       <HeaderGraphic>
@@ -155,11 +242,29 @@ const OrderCard = styled.View`
   padding: 10px;
 `;
 
+const Item = styled.View`
+  /* border: 2px solid #8022d9; */
+  background-color: #e0e0e0;
+  border-radius: 10px;
+  padding-bottom: 5px;
+  /* margin: 5px 16px; */
+  /* padding: 10px; */
+`;
+
 const HeaderGraphic = styled.View`
   position: absolute;
   width: 100%;
   top: -90px;
   z-index: -100;
+`;
+
+const UpdateContainer = styled.TouchableOpacity`
+  margin: 10px 16px;
+  height: 48px;
+  align-items: center;
+  justify-content: center;
+  background-color: #8022d9;
+  border-radius: 6px;
 `;
 
 const RightCircle = styled.View`
@@ -181,16 +286,6 @@ const LeftCircle = styled.View`
   border-radius: 300px;
   left: -20px;
   top: -40px;
-`;
-
-const DetailsContainer = styled.TouchableOpacity`
-  margin: 0 10px;
-  height: 30px;
-  margin-top: 10px;
-  align-items: center;
-  justify-content: center;
-  background-color: #8022d9;
-  border-radius: 6px;
 `;
 
 const StatusBar = styled.StatusBar``;

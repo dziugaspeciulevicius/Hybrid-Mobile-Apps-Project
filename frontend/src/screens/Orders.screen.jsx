@@ -8,6 +8,9 @@ import { listOrders } from "../actions/orderActions";
 const OrdersScreen = ({ navigation }) => {
   const dispatch = useDispatch();
 
+  const orderDetails = useSelector((state) => state.orderDetails);
+  const { order } = orderDetails;
+
   const orderList = useSelector((state) => state.orderList);
   const { loading, error, orders } = orderList;
 
@@ -22,7 +25,7 @@ const OrdersScreen = ({ navigation }) => {
       navigation.navigate("Auth", { screen: "Login" });
       console.log("push to login page");
     }
-  }, [dispatch, userInfo, navigation]);
+  }, [dispatch, userInfo, navigation, order]);
 
   const viewDetailsHandler = (order) => {
     console.log("view order details");
