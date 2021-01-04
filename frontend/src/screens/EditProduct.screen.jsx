@@ -77,7 +77,7 @@ const EditProductScreen = ({ route, navigation }) => {
         countInStock,
       })
     );
-    console.log("Update product")
+    console.log("Update product");
   };
   return (
     <Container>
@@ -144,7 +144,9 @@ const EditProductScreen = ({ route, navigation }) => {
             autoCompleteType="name"
             autoCorrect={false}
             value={productDescription}
-            onChangeText={(productDescription) => setDescription(productDescription)}
+            onChangeText={(productDescription) =>
+              setDescription(productDescription)
+            }
           />
         </FormContainer>
       </Form>

@@ -1,12 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  Alert,
-  FlatList,
-  TouchableOpacity,
-  View,
-  ScrollView,
-} from "react-native";
+import { Alert, ScrollView } from "react-native";
 import styled from "styled-components";
 import Text from "../components/Text";
 import { listUsers, deleteUser } from "../actions/userActions.js";
@@ -202,7 +196,6 @@ const DeleteContainer = styled.TouchableOpacity`
 `;
 
 const ButtonsContainer = styled.View`
-  /* flex: 1; */
   flex-direction: row;
   justify-content: space-between;
   justify-content: center;

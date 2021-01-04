@@ -1,13 +1,13 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Alert, FlatList, TouchableOpacity, View, ScrollView } from "react-native";
+import { ScrollView } from "react-native";
 import styled from "styled-components";
 import Text from "../components/Text";
 import { listOrders } from "../actions/orderActions";
 
 const OrdersScreen = ({ navigation }) => {
   const dispatch = useDispatch();
-  
+
   const orderList = useSelector((state) => state.orderList);
   const { loading, error, orders } = orderList;
 
@@ -30,8 +30,8 @@ const OrdersScreen = ({ navigation }) => {
   const viewDetailsHandler = (order) => {
     console.log("view order details");
     navigation.navigate("OrderDetails", {
-      ...order
-    })
+      ...order,
+    });
   };
 
   return (
@@ -50,50 +50,55 @@ const OrdersScreen = ({ navigation }) => {
         </Text>
       ) : (
         <ScrollView>
-        {orders.map((order) => (
-          <OrderCard key={order._id}>
-            <Text heavy>
-              ID:
-              <Text semi> {order._id}</Text>
-            </Text>
-            <Text heavy>
-              User:
-              <Text semi> {order.user && order.user.name}</Text>
-            </Text>
-            <Text heavy>
-              Date:
-              <Text semi> {order.createdAt.substring(0, 10)}</Text>
-            </Text>
-            <Text heavy>
-              Total:
-              <Text semi> ${order.totalPrice}</Text>
-            </Text>
-            <Text heavy>
-              Paid:
-              {order.isPaid ? (
-                <Text semi> {order.paidAt.substring(0, 10)}</Text>
-              ) : (
-                <Text heavy color="#FF0000"> Not paid</Text>
-              )}
-            </Text>
-            <Text heavy>
-              Delivered:
-              {order.isDelivered ? (
-                <Text semi> {order.deliveredAt.substring(0, 10)}</Text>
-              ) : (
-                <Text heavy color="#FF0000"> Not delivered</Text>
-              )}
-            </Text>
+          {orders.map((order) => (
+            <OrderCard key={order._id}>
+              <Text heavy>
+                ID:
+                <Text semi> {order._id}</Text>
+              </Text>
+              <Text heavy>
+                User:
+                <Text semi> {order.user && order.user.name}</Text>
+              </Text>
+              <Text heavy>
+                Date:
+                <Text semi> {order.createdAt.substring(0, 10)}</Text>
+              </Text>
+              <Text heavy>
+                Total:
+                <Text semi> ${order.totalPrice}</Text>
+              </Text>
+              <Text heavy>
+                Paid:
+                {order.isPaid ? (
+                  <Text semi> {order.paidAt.substring(0, 10)}</Text>
+                ) : (
+                  <Text heavy color="#FF0000">
+                    {" "}
+                    Not paid
+                  </Text>
+                )}
+              </Text>
+              <Text heavy>
+                Delivered:
+                {order.isDelivered ? (
+                  <Text semi> {order.deliveredAt.substring(0, 10)}</Text>
+                ) : (
+                  <Text heavy color="#FF0000">
+                    {" "}
+                    Not delivered
+                  </Text>
+                )}
+              </Text>
 
               <DetailsContainer onPress={() => viewDetailsHandler(order)}>
                 <Text semi center color="#fff">
                   Details
                 </Text>
               </DetailsContainer>
-              
-          </OrderCard>
-        ))}
-      </ScrollView>
+            </OrderCard>
+          ))}
+        </ScrollView>
       )}
 
       <HeaderGraphic>

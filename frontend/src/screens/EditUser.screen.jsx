@@ -1,16 +1,16 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
-import { getUserDetails, updateUser } from "../actions/userActions";
 import { USER_UPDATE_RESET } from "../constants/userConstants";
 import Text from "../components/Text";
 import { Checkbox } from "react-native-paper";
+import { updateUser } from "../actions/userActions";
 
 const EditUserScreen = ({ route, navigation }) => {
   const { _id, name, email, isAdmin } = route.params;
-    const [userName, setName] = useState(name);
-    const [userEmail, setEmail] = useState(email);
-    const [isUserAdmin, setIsAdmin] = useState(isAdmin);
+  const [userName, setName] = useState(name);
+  const [userEmail, setEmail] = useState(email);
+  const [isUserAdmin, setIsAdmin] = useState(isAdmin);
 
   const dispatch = useDispatch();
 
@@ -29,7 +29,7 @@ const EditUserScreen = ({ route, navigation }) => {
     if (successUpdate) {
       dispatch({ type: USER_UPDATE_RESET });
       navigation.navigate("Main", { screen: "Users" });
-    } 
+    }
   });
 
   const submitHandler = (e) => {

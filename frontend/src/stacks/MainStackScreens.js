@@ -1,8 +1,5 @@
 import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { Ionicons } from "@expo/vector-icons";
-import { View } from "react-native";
-import { Button } from "react-native";
 
 import OrdersScreen from "../screens/Orders.screen";
 import UsersScreen from "../screens/Users.screen";

@@ -6,9 +6,7 @@ import {
   getUserDetails,
   updateUserProfile,
   logout,
-  register,
 } from "../actions/userActions";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const ProfileScreen = ({ navigation }) => {
   const [name, setName] = useState("");
@@ -31,11 +29,6 @@ const ProfileScreen = ({ navigation }) => {
     console.log("logout");
     dispatch(logout());
     navigation.navigate("Auth", { screen: "Login" });
-    // if (userInfo) {
-    // console.log("user info is still in state")
-    // } else {
-    // console.log("user info is no longer logged in")
-    // }
   };
 
   // checking is user is logged in
@@ -45,18 +38,18 @@ const ProfileScreen = ({ navigation }) => {
       navigation.navigate("Auth", { screen: "Login" });
     } else {
       if (error) {
-        console.log(error)
+        console.log(error);
         navigation.navigate("Auth", { screen: "Login" });
       } else {
         // if no user name, dispatch userDetails which takes an id, so we can pass a profile instead of an id
         if (!user || !user.name) {
-          console.log("dispatch profile")
+          console.log("dispatch profile");
           dispatch(getUserDetails("profile"));
-          } else {
-            // if we already have a user we can fill user info
-            setName(user.name);
-            setEmail(user.email);
-            // console.log("User token: ", userInfo.token);
+        } else {
+          // if we already have a user we can fill user info
+          setName(user.name);
+          setEmail(user.email);
+          // console.log("User token: ", userInfo.token);
         }
       }
     }
@@ -87,7 +80,6 @@ const ProfileScreen = ({ navigation }) => {
             autoCapitalize="none"
             autoCompleteType="name"
             autoCorrect={false}
-            // autoFocus={true}
             value={name}
             onChangeText={(name) => setName(name)}
           />
@@ -98,7 +90,6 @@ const ProfileScreen = ({ navigation }) => {
             autoCapitalize="none"
             autoCompleteType="email"
             autoCorrect={false}
-            // autoFocus={true}
             value={email}
             onChangeText={(email) => setEmail(email)}
           />
@@ -109,7 +100,6 @@ const ProfileScreen = ({ navigation }) => {
             autoCapitalize="none"
             autoCompleteType="password"
             autoCorrect={false}
-            // autoFocus={true}
             secureTextEntry={true}
             value={password}
             onChangeText={(password) => setPassword(password)}
@@ -121,7 +111,6 @@ const ProfileScreen = ({ navigation }) => {
             autoCapitalize="none"
             autoCompleteType="password"
             autoCorrect={false}
-            // autoFocus={true}
             secureTextEntry={true}
             value={confirmPassword}
             onChangeText={(confirmPassword) =>

@@ -254,7 +254,6 @@ const DeleteContainer = styled.TouchableOpacity`
 `;
 
 const ButtonsContainer = styled.View`
-  /* flex: 1; */
   flex-direction: row;
   justify-content: space-between;
   justify-content: center;

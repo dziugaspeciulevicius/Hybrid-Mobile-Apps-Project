@@ -1,10 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { login } from "../actions/userActions";
-import { View, StyleSheet } from "react-native";
 import styled from "styled-components";
 import Text from "../components/Text";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const LoginScreen = ({ navigation }) => {
   const [email, setEmail] = useState("");
@@ -17,10 +15,10 @@ const LoginScreen = ({ navigation }) => {
 
   useEffect(() => {
     if (userInfo && userInfo.isAdmin) {
-    // if (userInfo) {
+      // if (userInfo) {
       navigation.navigate("Main", { screen: "Orders" });
     } else {
-      console.log("user is not an admin")
+      console.log("user is not an admin");
     }
   }, [userInfo, navigation]);
 
@@ -38,7 +36,9 @@ const LoginScreen = ({ navigation }) => {
       </Main>
 
       {error && (
-          <Text center color="red">{error}</Text>
+        <Text center color="red">
+          {error}
+        </Text>
       )}
       <Auth>
         <AuthContainer>
@@ -47,7 +47,6 @@ const LoginScreen = ({ navigation }) => {
             autoCapitalize="none"
             autoCompleteType="email"
             autoCorrect={false}
-            // autoFocus={true}
             keyboardType="email-address"
             value={email}
             onChangeText={(email) => setEmail(email)}
@@ -59,7 +58,6 @@ const LoginScreen = ({ navigation }) => {
             autoCapitalize="none"
             autoCompleteType="password"
             autoCorrect={false}
-            // autoFocus={true}
             secureTextEntry={true}
             value={password}
             onChangeText={(password) => setPassword(password)}

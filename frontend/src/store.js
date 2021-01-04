@@ -8,11 +8,9 @@ import {
   productDeleteReducer,
   productCreateReducer,
   productUpdateReducer,
-  productReviewCreateReducer
 } from "./reducers/productReducers";
 import {
   userLoginReducer,
-  userRegisterReducer,
   userDetailsReducer,
   userUpdateProfileReducer,
   userListReducer,
@@ -20,11 +18,8 @@ import {
   userUpdateReducer,
 } from "./reducers/userReducers.js";
 import {
-  orderCreateReducer,
   orderDetailsReducer,
-  orderPayReducer,
   orderDeliverReducer,
-  orderListMyReducer,
   orderListReducer,
 } from "./reducers/orderReducers.js";
 
@@ -34,19 +29,14 @@ const reducer = combineReducers({
   productDelete: productDeleteReducer,
   productCreate: productCreateReducer,
   productUpdate: productUpdateReducer,
-  productReviewCreate: productReviewCreateReducer,
   userLogin: userLoginReducer,
-  userRegister: userRegisterReducer,
   userDetails: userDetailsReducer,
   userUpdateProfile: userUpdateProfileReducer,
   userList: userListReducer,
   userDelete: userDeleteReducer,
   userUpdate: userUpdateReducer,
-  orderCreate: orderCreateReducer,
   orderDetails: orderDetailsReducer,
-  orderPay: orderPayReducer,
   orderDeliver: orderDeliverReducer,
-  orderListMy: orderListMyReducer,
   orderList: orderListReducer,
 });
 

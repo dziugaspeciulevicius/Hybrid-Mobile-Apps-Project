@@ -1,26 +1,15 @@
 import React, { useEffect } from "react";
-import {
-  Alert,
-  FlatList,
-  TouchableOpacity,
-  View,
-  ScrollView,
-} from "react-native";
+import { Alert, ScrollView } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import Text from "../components/Text";
-import { listOrders } from "../actions/orderActions";
 import {
   getOrderDetails,
-  payOrder,
   deliverOrder,
 } from "../actions/orderActions";
-import {
-  ORDER_PAY_RESET,
-  ORDER_DELIVER_RESET,
-} from "../constants/orderConstants";
+import { ORDER_DELIVER_RESET } from "../constants/orderConstants";
 
-const OrderDetails = ({ match, route, navigation }) => {
+const OrderDetails = ({ route, navigation }) => {
   const {
     _id,
     shippingAddress,
@@ -63,13 +52,11 @@ const OrderDetails = ({ match, route, navigation }) => {
     e.preventDefault();
     dispatch(deliverOrder(order));
     Alert.alert(
-        "Order delivered",
-        "Order has been marked as delivered",
-        [
-          { text: "OK" },
-        ],
-        { cancelable: false }
-      );
+      "Order delivered",
+      "Order has been marked as delivered",
+      [{ text: "OK" }],
+      { cancelable: false }
+    );
   };
 
   return (
@@ -243,12 +230,9 @@ const OrderCard = styled.View`
 `;
 
 const Item = styled.View`
-  /* border: 2px solid #8022d9; */
   background-color: #e0e0e0;
   border-radius: 10px;
   padding-bottom: 5px;
-  /* margin: 5px 16px; */
-  /* padding: 10px; */
 `;
 
 const HeaderGraphic = styled.View`
