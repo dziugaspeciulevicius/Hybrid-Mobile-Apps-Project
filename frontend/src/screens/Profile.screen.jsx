@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-
 import styled from "styled-components";
 import Text from "../components/Text";
 import {
@@ -88,7 +87,7 @@ const ProfileScreen = ({ navigation }) => {
             autoCapitalize="none"
             autoCompleteType="name"
             autoCorrect={false}
-            autoFocus={true}
+            // autoFocus={true}
             value={name}
             onChangeText={(name) => setName(name)}
           />
@@ -99,7 +98,7 @@ const ProfileScreen = ({ navigation }) => {
             autoCapitalize="none"
             autoCompleteType="email"
             autoCorrect={false}
-            autoFocus={true}
+            // autoFocus={true}
             value={email}
             onChangeText={(email) => setEmail(email)}
           />
@@ -110,7 +109,7 @@ const ProfileScreen = ({ navigation }) => {
             autoCapitalize="none"
             autoCompleteType="password"
             autoCorrect={false}
-            autoFocus={true}
+            // autoFocus={true}
             secureTextEntry={true}
             value={password}
             onChangeText={(password) => setPassword(password)}
@@ -122,7 +121,7 @@ const ProfileScreen = ({ navigation }) => {
             autoCapitalize="none"
             autoCompleteType="password"
             autoCorrect={false}
-            autoFocus={true}
+            // autoFocus={true}
             secureTextEntry={true}
             value={confirmPassword}
             onChangeText={(confirmPassword) =>

@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 import AuthStackScreens from "./AuthStackScreens";
 import MainStackScreens from "./MainStackScreens";
+import OrderDetails from "../screens/OrderDetails.screen";
 
 export default AppStackScreens = () => {
   const AppStack = createStackNavigator();
@@ -12,6 +13,7 @@ export default AppStackScreens = () => {
     <AppStack.Navigator headerMode="none">
         <AppStack.Screen name="Auth" component={AuthStackScreens} />
         <AppStack.Screen name="Main" component={MainStackScreens} />
+        <AppStack.Screen name="OrderDetails" component={OrderDetails} />
     </AppStack.Navigator>
   );
 };

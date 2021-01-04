@@ -24,9 +24,12 @@ const OrdersScreen = ({ navigation }) => {
     }
   }, [dispatch, userInfo, navigation]);
 
-  const viewDetailsHandler = (e) => {
-    e.preventDefault();
+  const viewDetailsHandler = (order) => {
     console.log("view order details");
+    navigation.navigate("OrderDetails", {
+      // id: order._id
+      ...order
+    })
   };
 
   return (
@@ -80,7 +83,7 @@ const OrdersScreen = ({ navigation }) => {
               )}
             </Text>
 
-              <DetailsContainer onPress={viewDetailsHandler}>
+              <DetailsContainer onPress={() => viewDetailsHandler(order)}>
                 <Text semi center color="#fff">
                   Details
                 </Text>

@@ -16,7 +16,7 @@ const LoginScreen = ({ navigation }) => {
   const { loading, error, userInfo } = userLogin;
 
   useEffect(() => {
-    if (userInfo && userInfo.isAdmin) {
+    if (userInfo ) {
       navigation.navigate("Main", { screen: "Orders" });
     } else {
       console.log("user is not an admin")
@@ -46,7 +46,7 @@ const LoginScreen = ({ navigation }) => {
             autoCapitalize="none"
             autoCompleteType="email"
             autoCorrect={false}
-            autoFocus={true}
+            // autoFocus={true}
             keyboardType="email-address"
             value={email}
             onChangeText={(email) => setEmail(email)}
@@ -58,7 +58,7 @@ const LoginScreen = ({ navigation }) => {
             autoCapitalize="none"
             autoCompleteType="password"
             autoCorrect={false}
-            autoFocus={true}
+            // autoFocus={true}
             secureTextEntry={true}
             value={password}
             onChangeText={(password) => setPassword(password)}
