@@ -24,7 +24,7 @@ import {
   USER_UPDATE_REQUEST,
   USER_UPDATE_SUCCESS,
 } from "../constants/userConstants";
-// import { ORDER_LIST_MY_RESET } from "../constants/orderConstants";
+import { ORDER_LIST_MY_RESET } from "../constants/orderConstants";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export const login = (email, password) => async (dispatch) => {
@@ -34,8 +34,6 @@ export const login = (email, password) => async (dispatch) => {
     });
 
     const config = {
-      // when we're sending data, we want to send in a headers a content type of app/json
-      // this is where we will pass the token for protected routes
       headers: {
         "Content-Type": "application/json",
       },

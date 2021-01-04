@@ -118,6 +118,7 @@ export const userUpdateReducer = (state = { user: {} }, action) => {
       return { loading: false, success: true };
     case USER_UPDATE_FAIL:
       return { loading: false, error: action.payload };
+      // on reset return state obj with empty user
     case USER_UPDATE_RESET:
       return {
         user: {},

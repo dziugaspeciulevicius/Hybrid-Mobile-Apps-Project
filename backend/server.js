@@ -30,12 +30,6 @@ app.use("/api/users", userRoutes);
 app.use("/api/orders", orderRoutes);
 app.use("/api/upload", uploadRoutes);
 
-
-// paypal config route (when we ready to make a payment, we hit this route and fetch client id)
-// app.get("/api/config/paypal", (req, res) =>
-//   res.send(process.env.PAYPAL_CLIENT_ID)
-// );
-
 // making uploads folder static so it can get loaded in the browser
 const __dirname = path.resolve()
 app.use('/uploads', express.static(path.join(__dirname, '/uploads')))

@@ -100,7 +100,7 @@ const Container = styled.View`
 `;
 
 const Main = styled.View`
-  margin-top: 60px;
+  margin-top: 150px;
 `;
 
 const Form = styled.View`
