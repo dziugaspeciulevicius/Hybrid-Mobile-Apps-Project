@@ -1,11 +1,17 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Alert, FlatList, TouchableOpacity, View, ScrollView } from "react-native";
+import {
+  Alert,
+  FlatList,
+  TouchableOpacity,
+  View,
+  ScrollView,
+} from "react-native";
 import styled from "styled-components";
 import Text from "../components/Text";
 import { listUsers, deleteUser } from "../actions/userActions.js";
 
-const UsersScreen = () => {
+const UsersScreen = ({ navigation }) => {
   const dispatch = useDispatch();
 
   const userList = useSelector((state) => state.userList);
@@ -13,6 +19,9 @@ const UsersScreen = () => {
 
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
+
+  const userDetails = useSelector((state) => state.userDetails);
+  const { user } = userDetails; // from user reducer
 
   // user delete part of the state
   const userDelete = useSelector((state) => state.userDelete);
@@ -26,7 +35,7 @@ const UsersScreen = () => {
       navigation.navigate("Auth", { screen: "Login" });
       console.log("push to login page");
     }
-  }, [dispatch, successDelete, userInfo]);
+  }, [dispatch, successDelete, userInfo, navigation, user]);
 
   const deleteUserHandler = (id) => {
     Alert.alert(
@@ -44,9 +53,11 @@ const UsersScreen = () => {
     );
   };
 
-  const editHandler = (e) => {
-    e.preventDefault();
+  const editHandler = (user) => {
     console.log("edit profile");
+    navigation.navigate("EditUser", {
+      ...user,
+    });
   };
 
   return (
@@ -95,7 +106,7 @@ const UsersScreen = () => {
               </Text>
 
               <ButtonsContainer>
-                <UpdateContainer onPress={editHandler}>
+                <UpdateContainer onPress={() => editHandler(user)}>
                   <Text semi center color="#fff">
                     Edit information
                   </Text>

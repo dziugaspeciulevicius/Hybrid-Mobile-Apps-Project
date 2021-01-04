@@ -7,12 +7,12 @@ import { listOrders } from "../actions/orderActions";
 
 const OrdersScreen = ({ navigation }) => {
   const dispatch = useDispatch();
+  
+  const orderList = useSelector((state) => state.orderList);
+  const { loading, error, orders } = orderList;
 
   const orderDetails = useSelector((state) => state.orderDetails);
   const { order } = orderDetails;
-
-  const orderList = useSelector((state) => state.orderList);
-  const { loading, error, orders } = orderList;
 
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
@@ -30,7 +30,6 @@ const OrdersScreen = ({ navigation }) => {
   const viewDetailsHandler = (order) => {
     console.log("view order details");
     navigation.navigate("OrderDetails", {
-      // id: order._id
       ...order
     })
   };
